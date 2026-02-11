@@ -5,7 +5,8 @@ export function signToken(user) {
 }
 
 export function authMiddleware(req, res, next) {
-  const token = req.cookies?.ck_token || req.headers.authorization?.replace("Bearer ", "");
+  const hdr = req.headers.authorization || "";
+  const token = hdr.startsWith("Bearer ") ? hdr.slice(7) : null;
   if (!token) return res.status(401).json({ error: "unauthorized" });
   try {
     req.user = jwt.verify(token, process.env.JWT_SECRET);

@@ -1,14 +1,11 @@
 export const DEFAULT_PERMS = {
-  view_channel: true,
+  view_channels: true,
   send_messages: true,
-  manage_channels: false,
-  manage_roles: false,
-  manage_server: false,
-  admin: false,
-  connect_voice: true
+  join_voice: true,
 };
 
-export function hasPerm(rolePerms, perm) {
-  if (rolePerms?.admin) return true;
-  return !!rolePerms?.[perm];
+export function hasPerm(perms, key) {
+  if (!perms) return false;
+  if (perms.admin) return true;
+  return !!perms[key];
 }

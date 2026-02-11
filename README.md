@@ -1,44 +1,20 @@
-# ChatKick API (Railway-ready)
+# ChatKick API (Token Auth) — Free hosting friendly
 
-## Download + run
-1) Create Postgres and run `schema.sql`.
-2) Copy `.env.example` -> `.env` and fill values.
-3) Run:
-   - npm i
-   - npm run dev
-4) Health:
-   - GET /health
+This backend avoids cross-site cookie issues by using **Bearer tokens**.
 
-## Deploy on Railway (Online)
-1) New Railway Project
-2) Add **PostgreSQL** plugin
-3) Run `schema.sql` inside Railway Postgres (Query tab)
-4) Deploy this code (upload zip to GitHub then connect, or use Railway's GitHub deploy)
-5) Set Railway Variables:
-   - DATABASE_URL (from Railway Postgres)
+## Deploy on Render (Free)
+1. New → PostgreSQL (Free) → copy External Database URL.
+2. New → Web Service → connect GitHub repo.
+3. Env Vars:
+   - DATABASE_URL
    - JWT_SECRET
-   - CORS_ORIGIN (your frontend URL)
-   - LIVEKIT_URL
-   - LIVEKIT_API_KEY
-   - LIVEKIT_API_SECRET
-6) Test:
-   - https://YOUR-RAILWAY-APP/health
+   - CORS_ORIGINS (comma-separated, e.g. https://xxxx.netlify.app)
+   - LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET
+4. Run `schema.sql` in the database Query tool.
 
-## Endpoints (MVP)
-- POST /auth/register {email, username, password}
-- POST /auth/login {email, password}
-- POST /auth/logout
-- GET /me
-- PATCH /me {username?, avatar_url?, settings?:{language}}
-- GET /servers
-- POST /servers {name, icon_url?}
-- GET /servers/:serverId/roles
-- POST /servers/:serverId/roles
-- GET /servers/:serverId/channels
-- POST /servers/:serverId/channels
-- GET /channels/:channelId/messages
-- POST /channels/:channelId/messages
-- GET /friends
-- POST /friends/request {username}
-- POST /friends/accept {username}
-- GET /voice/token?room=ROOM_NAME
+## Test
+- GET /health
+- POST /auth/register
+- POST /auth/login
+
+Use header: `Authorization: Bearer <token>` for protected routes.
